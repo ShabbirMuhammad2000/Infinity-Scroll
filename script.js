@@ -10,9 +10,9 @@ let initialLoad = true
 
 
 // Unsplash API
-const count = 5
+let count = 5
 const apiKey = 'EJ4DZFLjD80SOwuN12lS-AVB2V6pOB_TMOGWfvYwGM0'
-const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`
+let apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`
 
 // Helper Function to Set Attributes on DOM Elements
 function setAttributes(element, attributes) {
@@ -29,7 +29,7 @@ function imageLoaded() {
     ready = true
     laoder.hidden = true
     initialLoad = false
-    count = 30
+    count = 5
     apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`
   }
 }
@@ -75,9 +75,9 @@ async function getPhotos() {
 }
 
 // Search Photos
-async function searchPhotos() {
+async function searchPhotos(query) {
   try {
-    const response = await fetch('https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}')
+    const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}&query=${query}`);
     photosArray = await response.json()
     imageContainer.innerHTML = '' // clears previous images
     displayPhotos()
@@ -87,9 +87,19 @@ async function searchPhotos() {
   }
 }
 
+const searchButton = document.getElementById("search-button")
+searchButton.addEventListener('click', () => {
+  const searchInput = document.getElementById("search-input")
+  const query = searchInput.value.trim()
+  if(query !== '') {
+    searchPhotos(query)
+  }
+})
+
 // Check to see if scrolling near bottom of page, Load more photos
 window.addEventListener('scroll', () => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 && ready ) {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 && ready  && 
+    document.getElementById('search-input').value.trim() === '') {
     ready = false
     getPhotos()
   }
