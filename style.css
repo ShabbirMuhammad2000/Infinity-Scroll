@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-
 html {
   box-sizing: border-box;
 }
@@ -28,7 +27,7 @@ h1 {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba( 255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .loader img {
@@ -49,13 +48,50 @@ h1 {
   margin-top: 5px;
 }
 
+/* Search Bar */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#search-input {
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+
+#search-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 /* Media Query */
 @media screen and (max-width: 600px) {
-  h1{
+  h1 {
     font-size: 20px;
   }
 
   .image-container {
     margin: 10px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  #search-input,
+  #search-button {
+    margin: 10px 0;
   }
 }

@@ -7,6 +7,7 @@ let imagesLoaded = 0;
 let totalImages = 0;
 let photosArray = []
 let initialLoad = true
+let query = ''
 
 
 // Unsplash API
@@ -66,44 +67,60 @@ function displayPhotos() {
 // Get photos from Unsplash Api
 async function getPhotos() {
   try {
+    loader.hidden = false;
     const response = await fetch(apiUrl)
     photosArray = await response.json()
     displayPhotos()
   } catch (error) {
-    // Catch Error Here
+    console.log('Error getting photos:', error)
   }
 }
 
 // Search Photos
-async function searchPhotos(query) {
+async function searchPhotos() {
   try {
-    const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}&query=${query}`);
-    photosArray = await response.json()
-    imageContainer.innerHTML = '' // clears previous images
-    displayPhotos()
-  }
-  catch(error) {
-    console.log('Error getting photos')
+    loader.hidden = false;
+    const response = await fetch(
+      `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}&query=${query}`
+    );
+    photosArray = await response.json();
+    displayPhotos();
+  } catch (error) {
+    console.log('Error getting photos:', error);
   }
 }
 
+function performSearch (searchQuery) {
+  query = searchQuery.trim()
+  imageContainer.innerHTML = ''
+  searchPhotos()
+}
+
 const searchButton = document.getElementById("search-button")
-searchButton.addEventListener('click', () => {
+searchButton.addEventListener('click', (event) => {
+  event.preventDefault()
   const searchInput = document.getElementById("search-input")
   const query = searchInput.value.trim()
   if(query !== '') {
-    searchPhotos(query)
+    performSearch(query)
+  } else {
+    query = ''
+    getPhotos()
   }
 })
 
 // Check to see if scrolling near bottom of page, Load more photos
 window.addEventListener('scroll', () => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 && ready  && 
-    document.getElementById('search-input').value.trim() === '') {
-    ready = false
-    getPhotos()
+  if (
+    window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 100 &&
+    ready
+  ) {
+    ready = false;
+    const searchInput = document.getElementById('search-input');
+    const query = searchInput.value.trim();
+    searchPhotos();
   }
-})
+});
 
 // On Load
 getPhotos()
