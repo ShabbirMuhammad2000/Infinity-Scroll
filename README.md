@@ -10,6 +10,12 @@ This is a web application that displays an infinite scroll of random images fetc
 
 ## Installation
 
-### 1. Clone the repository:
+#### 1. Clone the repository:
 
   git clone https://github.com/your-username/infinite-image-scroll.git
+
+#### 2.Navigate to the project directory:
+
+  cd Infinity-Scroll
+  
+ #### 3. Open index.html in your preferred web browser.
