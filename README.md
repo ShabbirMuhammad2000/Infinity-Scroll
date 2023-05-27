@@ -37,5 +37,5 @@ const apiKey = 'YOUR_API_KEY';
 
 Save the changes and reload the website for the new API key to take effect.
 
-Acknowledgements
-Unsplash - The API used to fetch random images.
+## Acknowledgements
+#### Unsplash - The API used to fetch random images.
